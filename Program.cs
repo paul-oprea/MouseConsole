@@ -14,8 +14,9 @@ namespace MouseConsole
             {
                 int delay = int.Parse(args[0]);
                 while (true) {
-                    MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
-                    MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
+                    //MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftDown);
+                    //MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.LeftUp);
+                    MouseOperations.MouseEvent(MouseOperations.MouseEventFlags.Move);
                     //Console.WriteLine("Clicked");
                     System.Threading.Thread.Sleep(delay * 1000);
                 }

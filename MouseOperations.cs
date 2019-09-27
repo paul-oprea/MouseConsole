@@ -49,6 +49,23 @@ public class MouseOperations
     {
         MousePoint position = GetCursorPosition();
 
+        if (value == MouseEventFlags.Move) {
+            mouse_event
+                ((int)value,
+                 100,
+                 100,
+                 0,
+                 0)
+                ;
+            mouse_event
+                ((int)value,
+                 -100,
+                 -100,
+                 0,
+                 0)
+                ;
+        }
+        else
         mouse_event
             ((int)value,
              position.X,
