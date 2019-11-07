@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 public class MouseOperations
 {
+    public static int __SECOND = 1000;
+    public static int __RES_MS = 10;
+
     [Flags]
     public enum MouseEventFlags
     {
@@ -43,6 +46,57 @@ public class MouseOperations
         var gotPoint = GetCursorPos(out currentMousePoint);
         if (!gotPoint) { currentMousePoint = new MousePoint(0, 0); }
         return currentMousePoint;
+    }
+
+    public static void MouseMovementSequence() {
+        int y;
+        for (int x = 0; x < 360; x++)
+        {
+            y = (int)( Math.Sin( x / Math.PI / 2 ) * 10 );
+//            System.Console.WriteLine(y);
+            mouse_event
+                            ((int)MouseEventFlags.Move,
+                             1,
+                             y,
+                             0,
+                             0)
+                            ;
+            System.Threading.Thread.Sleep(__RES_MS);
+
+        };
+    }
+
+    public static MousePoint[] CaptureMouse(int Duration) {
+        int d = -1;
+        decimal c = Duration / __RES_MS;
+        MousePoint[] coordinates = new MousePoint[(int)Math.Ceiling(c) + 1];
+        
+        while (d < c) {
+            coordinates[ ++d ] = GetCursorPosition();
+            System.Console.Clear();
+            System.Console.Write(coordinates[d].X);
+            System.Console.Write(" ");
+            System.Console.WriteLine(coordinates[d].Y);
+            System.Console.Write("Seconds remaining: {0}", (c-d)* __RES_MS/__SECOND );
+ 
+            System.Threading.Thread.Sleep(__RES_MS);
+        }
+        return coordinates;
+    }
+
+    public static void ReplayMouse(MousePoint[] coordinates) {
+        for (int i = 1; i < coordinates.Length; i++)
+        {
+            mouse_event
+                            ((int)MouseEventFlags.Move,
+                             (coordinates[i].X - coordinates[i-1].X)/3,
+                             (coordinates[i].Y - coordinates[i-1].Y)/3,
+                             0,
+                             0)
+                            ;
+            System.Threading.Thread.Sleep(__RES_MS);
+        }
+
     }
 
     public static void MouseEvent(MouseEventFlags value)
