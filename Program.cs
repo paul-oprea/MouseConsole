@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace MouseConsole
         static void SequencedCapture(){
             for( int i = 0; i < 200; i++){
                 ScreenOperations.ImageSave("%NOW%"
-                    , System.Drawing.Imaging.ImageFormat.Png
+                    , format: ImageFormat.Png
                     , ScreenOperations.CaptureWindow(80, 297, 2040, 2850));
                     
                 System.Threading.Thread.Sleep( 2000 );
